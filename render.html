@@ -35,6 +35,8 @@
         <script src="http://www.appcycle.me/flappy/ndgmr.Collision.js"></script>
 
         <script>
+            var score = 0;
+
 // http://createjs.com/#!/TweenJS/demos/sparkTable
             // http://createjs.com/Docs/TweenJS/modules/TweenJS.html
             // view-source:http://createjs.com/Demos/EaselJS/Game.html COPY THIS
@@ -130,6 +132,7 @@
                 stage.addChild(bird, ground);
                 stage.addEventListener("stagemousedown", handleJumpStart);
                 
+                score = 0;
                 counter = new createjs.Text(0, "86px 'Montserrat'", "#ffffff");
                 counterOutline = new createjs.Text(0, "86px 'Montserrat'", "#ffffff");
                 counterOutline.outline = 5
@@ -177,6 +180,7 @@
                 //hide anything on stage and show the score
                 pipes.removeAllChildren();
                 createjs.Tween.get(start).to({y:start.y + 10}, 50).call(removeStart)
+                score = 0;
                 counter.text = 0
                 counterOutline.text = 0
                 counterOutline.alpha = 0
@@ -292,6 +296,7 @@
                             pipe.x = (pipe.x - deltaS*300);
                             if (pipe.x <= 338 && pipe.rotation == 0 && pipe.name != "counted") {
                                 pipe.name = "counted" //using the pipe name to count pipes
+                                score++;
                                 counter.text = counter.text + 1
                                 counterOutline.text = counterOutline.text + 1
                             }

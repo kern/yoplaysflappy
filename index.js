@@ -23,6 +23,7 @@ http.listen(process.env.PORT || 3000, function(){
         ph.createPage(function(page) {
             var yos = 0;
             var lastYo = "";
+            var highScore = 0;
 
             app.get('/yo', function(req, res) {
                 yos++;
@@ -34,12 +35,20 @@ http.listen(process.env.PORT || 3000, function(){
             page.open("http://www.yoplaysflappy.com/render", function(status) {
                 setInterval(function() {
                     page.evaluate(function () {
-                        return document.getElementById("testCanvas").toDataURL("image/jpeg", 0.1);
-                    }, function(dataURL) {
+                        return {
+                            score: window.score,
+                            state: document.getElementById("testCanvas").toDataURL("image/jpeg", 0.1);
+                        }
+                    }, function(result) {
+                        if (result.score > highScore) {
+                            highScore = result.score;
+                        }
+
                         io.emit('update', {
+                            highScore: highScore,
                             lastYo: lastYo,
                             yos: yos,
-                            state: dataURL
+                            state: result.state
                         });
                     });
                 }, 100);
