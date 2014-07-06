@@ -26,7 +26,7 @@ http.listen(process.env.PORT || 3000, function(){
 
             app.get('/yo', function(req, res) {
                 yos++;
-                lastYo = req.params.username;
+                lastYo = req.query.username;
                 page.sendEvent("keypress", 32);
                 res.end();
             });
