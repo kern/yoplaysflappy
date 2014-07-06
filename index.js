@@ -22,9 +22,11 @@ http.listen(process.env.PORT || 3000, function(){
     phantom.create(function(ph) {
         ph.createPage(function(page) {
             var yos = 0;
+            var lastyo = "";
 
             app.get('/yo', function(req, res) {
                 yos++;
+                lastYo = req.params.username;
                 page.sendEvent("keypress", 32);
                 res.end();
             });
@@ -35,6 +37,7 @@ http.listen(process.env.PORT || 3000, function(){
                         return document.getElementById("testCanvas").toDataURL("image/jpeg", 0.1);
                     }, function(dataURL) {
                         io.emit('update', {
+                            lastYo: lastYo,
                             yos: yos,
                             state: dataURL
                         });

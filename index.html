@@ -38,16 +38,18 @@
         <h1>Yo Plays Flappy Bird</h1>
         <img src="" id="state" />
         <p>Download <a href="http://www.justyo.co/">Yo</a>. Yo <strong>yoplaysflappy</strong>.</p>
-        <p>Total Yo's: <strong id="yos"></strong>.</p>
+        <p>Total Yo's: <strong id="yos"></strong>. Last Yo: <strong id="last-yo"></strong>.</p>
 
         <script src="/socket.io/socket.io.js"></script>
 
         <script>
             var stateImg = document.getElementById('state');
+            var lastYo = document.getElementById('last-yo');
             var yos = document.getElementById('yos');
 
             var socket = io();
             socket.on('update', function(msg) {
+                lastYo.innerHTML = msg.lastYo;
                 yos.innerHTML = msg.yos;
                 stateImg.src = msg.state;
             });
