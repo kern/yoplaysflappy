@@ -22,7 +22,7 @@ http.listen(process.env.PORT || 3000, function(){
     phantom.create(function(ph) {
         ph.createPage(function(page) {
             var yos = 0;
-            var lastyo = "";
+            var lastYo = "";
 
             app.get('/yo', function(req, res) {
                 yos++;
