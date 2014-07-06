@@ -37,8 +37,8 @@ http.listen(process.env.PORT || 3000, function(){
                     page.evaluate(function () {
                         return {
                             score: window.score,
-                            state: document.getElementById("testCanvas").toDataURL("image/jpeg", 0.1);
-                        }
+                            state: document.getElementById("testCanvas").toDataURL("image/jpeg", 0.1)
+                        };
                     }, function(result) {
                         if (result.score > highScore) {
                             highScore = result.score;
