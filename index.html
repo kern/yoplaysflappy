@@ -1,0 +1,9 @@
+<img src="" id="state" />
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var stateImg = document.getElementById('state');
+  var socket = io();
+  socket.on('update', function(msg) {
+          stateImg.src = msg;
+  });
+</script>

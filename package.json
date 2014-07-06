@@ -4,7 +4,9 @@
   "description": "yoplaysflappy =============",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.5.0"
+    "canvas": "^1.1.5",
+    "express": "^4.5.0",
+    "socket.io": "^1.0.6"
   },
   "devDependencies": {},
   "scripts": {
