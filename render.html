@@ -8,17 +8,9 @@
         <meta name="description" content="Flappy Bird in HTML5">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
         <style>
-            // @font-face {
-            //     font-family: 'Flappy Bird';
-            //     src: url('http://www.appcycle.me/flappy/fonts/FB.eot');
-            //     src: url('http://www.appcycle.me/flappy/fonts/FB.eot?#iefix') format('embedded-opentype'),
-            //          url('http://www.appcycle.me/flappy/fonts/FB.woff') format('woff'),
-            //          url('http://www.appcycle.me/flappy/fonts/FB.ttf') format('truetype'),
-            //          url('fonts/FB.svg#04b_19regular') format('svg');
-            //     font-weight: normal;
-            //     font-style: normal;
-            // }
             body, html {
                 margin: 0px;
                 padding: 0px;
@@ -48,7 +40,7 @@
             // view-source:http://createjs.com/Demos/EaselJS/Game.html COPY THIS
             var stage, w, h, loader, pipe1height, pipe2height, pipe3height, startX, startY, wiggleDelta;
             var background, bird, ground, pipe, bottomPipe, pipes, rotationDelta, counter, counterOutline;
-            var started = false;
+            var started = false; 
             var startJump = false; // Has the jump started?
 
             var jumpAmount = 120; // How high is the jump?
@@ -56,8 +48,8 @@
 
             var dead = false; // is the bird dead?
             var KEYCODE_SPACE = 32;     //usefull keycode
-            var gap = 250;
-            var masterPipeDelay = 78; // delay between pipes
+            var gap = 400;
+            var masterPipeDelay = 50; // delay between pipes
             var pipeDelay = masterPipeDelay; //counter used to monitor delay
 
             var counterShow = false;
@@ -77,7 +69,7 @@
                 createjs.Touch.enable(stage);
                 // stage.canvas.width = document.body.clientWidth; //document.width is obsolete
                 // stage.canvas.height = document.body.clientHeight; //document.height is obsolete
-
+                
                 // grab canvas width and height for later calculations:
                 w = stage.canvas.width;
                 h = stage.canvas.height;
@@ -97,21 +89,21 @@
             }
 
             function handleComplete() {
-
+                
                 background = new createjs.Shape();
                 background.graphics.beginBitmapFill(loader.getResult("background")).drawRect(0,0,w,h);
-
+                
                 var groundImg = loader.getResult("ground");
                 ground = new createjs.Shape();
                 ground.graphics.beginBitmapFill(groundImg).drawRect(0, 0, w+groundImg.width, groundImg.height);
                 ground.tileW = groundImg.width;
                 ground.y = h-groundImg.height;
-
-
+                
+            
                 var data = new createjs.SpriteSheet({
                     "images": [loader.getResult("bird")],
                     //set center and size of frames, center is important for later bird roation
-                    "frames": {"width": 92, "height": 64, "regX": 46, "regY": 32, "count": 3},
+                    "frames": {"width": 92, "height": 64, "regX": 46, "regY": 32, "count": 3}, 
                     // define two animations, run (loops, 0.21x speed) and dive (returns to dive and holds frame one static):
                     "animations": {"fly": [0, 2, "fly", 0.21], "dive": [1, 1, "dive", 1]}
                 });
@@ -132,14 +124,14 @@
 
                 stage.addChild(background);
 
-                pipes = new createjs.Container();
+                pipes = new createjs.Container(); 
                 stage.addChild(pipes)
 
                 stage.addChild(bird, ground);
                 stage.addEventListener("stagemousedown", handleJumpStart);
-
-                counter = new createjs.Text(0, "86px 'Flappy Bird'", "#ffffff");
-                counterOutline = new createjs.Text(0, "86px 'Flappy Bird'", "#000000");
+                
+                counter = new createjs.Text(0, "86px 'Montserrat'", "#ffffff");
+                counterOutline = new createjs.Text(0, "86px 'Montserrat'", "#ffffff");
                 counterOutline.outline = 5
                 counterOutline.textAlign = 'center'
                 counter.textAlign = 'center'
@@ -172,7 +164,7 @@
                     startJump = true
                     if (!started) {
                         started = true
-                        counterShow = true
+                        counterShow = true                        
                     }
                 }
             }
@@ -221,8 +213,9 @@
                 stage.addChild(start)
                 stage.addChild(share)
                 createjs.Tween.get(start).to({alpha:1, y: start.y + 50}, 400, createjs.Ease.sineIn).call(addClickToStart)
-                createjs.Tween.get(share).to({alpha:1, y: share.y + 50}, 400, createjs.Ease.sineIn).call(addClickToStart)
-
+                // createjs.Tween.get(share).to({alpha:1, y: share.y + 50}, 400, createjs.Ease.sineIn).call(addClickToStart)
+                restart();
+                
             }
             function removeStart() {
                 stage.removeChild(start)
@@ -256,11 +249,11 @@
                         createjs.Tween.removeTweens ( bird )
                     }
                 }
-
+                
                 if (!dead) {
                     ground.x = (ground.x-deltaS*300) % ground.tileW;
                 }
-
+            
 
                 if (started && !dead) {
                     if (pipeDelay == 0) {
@@ -288,7 +281,7 @@
                     for(var i = 0; i < l; i++) {
                         pipe = pipes.getChildAt(i);
                         if (pipe) {
-                            if (true) { // tried replacing true with this, but it's off: pipe.x < bird.x + 92 && pipe.x > bird.x
+                            if (true) { // tried replacing true with this, but it's off: pipe.x < bird.x + 92 && pipe.x > bird.x 
                                 var collision = ndgmr.checkRectCollision(pipe,bird,1,true)
                                 if (collision) {
                                     if (collision.width > 8 && collision.height > 8) {
@@ -302,7 +295,7 @@
                                 counter.text = counter.text + 1
                                 counterOutline.text = counterOutline.text + 1
                             }
-                            if (pipe.x + pipe.image.width <= -pipe.w) {
+                            if (pipe.x + pipe.image.width <= -pipe.w) { 
                                 pipes.removeChild(pipe)
                             }
                         }
@@ -340,23 +333,12 @@
                         .to({y:ground.y - 30}, (h - (bird.y+200))/1.5, createjs.Ease.linear); //drop to the bedrock
                 }
 
-
+                
                 stage.update(event);
             }
         </script>
     </head>
-    <body onload="init();">
+    <body onload="init();">      
     <canvas id="testCanvas" width="768" height="1024"></canvas>
-
-    <script>
-    var c = document.getElementById("testCanvas");
-    var dataURL = function() {
-        return c.toDataURL();
-    }
-
-    setInterval(function() {
-        console.log(dataURL());
-    }, 100);
-    </script>
     </body>
 </html>

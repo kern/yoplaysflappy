@@ -1,11 +1,56 @@
-<img src="" id="state" />
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Yo Plays Flappy Bird</title>
 
-<script src="/socket.io/socket.io.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
-<script>
-    var stateImg = document.getElementById('state');
-    var socket = io();
-    socket.on('update', function(msg) {
-        stateImg.src = msg;
-    });
-</script>
+        <style>
+            html, body {
+                font-family: 'Montserrat', sans-serif;
+                background: #9B59B6;
+                padding: 0;
+                margin: 0;
+            }
+
+            h1 {
+                margin: 20px;
+                text-align: center;
+                color: white;
+            }
+
+            p, a {
+                text-align: center;
+                color: white;
+            }
+
+            #state {
+                display: block;
+                margin: 20px auto;
+                width: 360px;
+                height: 480px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Yo Plays Flappy Bird</h1>
+        <img src="" id="state" />
+        <p>Download <a href="http://www.justyo.co/">Yo</a>. Yo <strong>yoflap</strong>.</p>
+        <p>Yo's: <strong id="yos"></strong>.</p>
+
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>
+            var stateImg = document.getElementById('state');
+            var yos = document.getElementById('yos');
+
+            var socket = io();
+            socket.on('update', function(msg) {
+                yos.innerHTML = msg.yos;
+                stateImg.src = msg.state;
+            });
+        </script>
+    </body>
+</html>

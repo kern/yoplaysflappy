@@ -25,22 +25,29 @@ app.get('/render', function(req, res) {
     res.sendfile('render.html');
 });
 
-app.get('/yo', function(req, res) {
-});
-
 http.listen(process.env.PORT || 3000, function(){
     console.log('Listening on port %d', http.address().port);
     phantom.create(function(ph) {
         ph.createPage(function(page) {
-            page.open("http://localhost:3000/render", function(status) {
+            var yos = 0;
+
+            app.get('/yo', function(req, res) {
+                yos++;
+                page.sendEvent("keypress", 32);
+                res.end();
+            });
+
+            page.open("http://yoplaysflappy.herokuapp.com/render", function(status) {
                 setInterval(function() {
                     page.evaluate(function () {
-                        return document.getElementById("testCanvas").toDataURL();
+                        return document.getElementById("testCanvas").toDataURL("image/jpeg", 0.1);
                     }, function(dataURL) {
-                        console.log("updated!");
-                        io.emit('update', dataURL);
+                        io.emit('update', {
+                            yos: yos,
+                            state: dataURL
+                        });
                     });
-                }, 1000);
+                }, 100);
             });
         });
     });
