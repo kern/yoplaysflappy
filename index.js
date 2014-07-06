@@ -33,9 +33,6 @@ http.listen(process.env.PORT || 3000, function(){
               stats.yos = obj.yos;
               stats.lastYo = obj.lastYo;
               stats.highScore = obj.highScore;
-              console.log(obj.yos);
-              console.log(obj.lastYo);
-              console.log(obj.highscore);
             });
 
             app.get('/yo', function(req, res) {
@@ -44,7 +41,9 @@ http.listen(process.env.PORT || 3000, function(){
                 page.sendEvent("keypress", 32);
                 res.end();
                 jf.writeFile(statsfile, stats, function(err) {
-                  console.log(err);
+                  if(err){
+                    console.log(err);
+                  };
                 })
             });
 
@@ -59,7 +58,9 @@ http.listen(process.env.PORT || 3000, function(){
                         if (result.score > stats.highScore) {
                             stats.highScore = result.score;
                             jf.writeFile(statsfile, stats, function(err) {
-                              console.log(err);
+                              if(err){
+                                console.log(err);
+                              };
                             })
                         }
 
